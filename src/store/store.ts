@@ -1,9 +1,11 @@
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit';
 import counter from './counter';
+import pokedex from './pokedex';
 
 export const store = configureStore({
   reducer: {
     counter,
+    pokedex,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
