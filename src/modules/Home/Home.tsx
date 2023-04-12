@@ -1,13 +1,18 @@
-import { selectPokemonsList } from '@/store/pokedex/selectors';
+import { selectOffset, selectPokemonsList } from '@/store/pokedex/selectors';
 import { buttonTypes, getPokemons } from '@/store/pokedex/thunks';
 import { AppDispatch } from '@/store/store';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import pokedexImg from '@/assets/pokedex.webp';
+import pokeball from '@/assets/pokeball.png';
+import './Home.css';
 
 export const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const pokemonsList = useSelector(selectPokemonsList);
+  const offsetValue = useSelector(selectOffset);
 
   const dispatchPokemons = (button: buttonTypes) => {
     dispatch(getPokemons(button));
@@ -17,13 +22,16 @@ export const Home = () => {
     dispatchPokemons('initial');
   }, []);
 
-  const pokemonsList = useSelector(selectPokemonsList);
+  const onClickName = (url: string) => {
+    const splitUrl = url.split('/');
+    const id = splitUrl[splitUrl.length - 2];
+    navigate(`pokedex/${id}`);
+  };
 
-  console.log(pokemonsList);
   return (
     <div>
-      <h1>Pokedex</h1>
-      <table>
+      <img className='pokedexImage' src={pokedexImg} alt='pokedex' />
+      <table className='table'>
         <thead>
           <tr>
             <th>Name</th>
@@ -31,13 +39,29 @@ export const Home = () => {
         </thead>
         <tbody>
           {pokemonsList.map(({ name, url }) => (
-            <tr onClick={() => navigate('')}>{name}</tr>
+            <tr key={name} onClick={() => onClickName(url)}>
+              <td className='pokemonName'>
+                <img src={pokeball} alt='pokeball' />
+                {name}
+              </td>
+            </tr>
           ))}
-          <tr></tr>
         </tbody>
       </table>
-      <button onClick={() => dispatchPokemons('prev')}>Prev</button>
-      <button onClick={() => dispatchPokemons('next')}>Next</button>
+      <div className='changeButtonsContainer'>
+        <button
+          disabled={offsetValue === 0}
+          onClick={() => dispatchPokemons('prev')}
+        >
+          Prev
+        </button>
+        <button
+          disabled={offsetValue === 150}
+          onClick={() => dispatchPokemons('next')}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

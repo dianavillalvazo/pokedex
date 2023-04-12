@@ -1,4 +1,4 @@
-import { setPokemonsList, setSinglePokemon } from '.';
+import { setPageChange, setPokemonsList, setSinglePokemon } from '.';
 import { AppThunk } from '../store';
 
 export type buttonTypes = 'next' | 'prev' | 'initial';
@@ -6,14 +6,13 @@ const pokemonsByPage = 20;
 
 export const getPokemons =
   (button: buttonTypes): AppThunk =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     try {
-      let offset = pokemonsByPage;
-
-      if (offset && button === 'next') {
-        offset += pokemonsByPage;
+      let offset = getState().pokedex.offset;
+      if (button === 'next') {
+        offset === 140 ? (offset = 150) : (offset += pokemonsByPage);
       } else if (button === 'prev') {
-        offset -= pokemonsByPage;
+        offset === 150 ? (offset = 140) : (offset -= pokemonsByPage);
       }
 
       const pokemons = await fetch(
@@ -26,7 +25,10 @@ export const getPokemons =
         .then((response) => response.json())
         .then((response) => response.results);
       dispatch(setPokemonsList(pokemons));
-    } catch {}
+      dispatch(setPageChange(offset));
+    } catch (e) {
+      console.log(e);
+    }
   };
 
 export const getSinglePokemon =

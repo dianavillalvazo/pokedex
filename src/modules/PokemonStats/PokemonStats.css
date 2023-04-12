@@ -1,3 +1,89 @@
-.generalInfo {
+.container {
+    background-color: red;
+    padding: 20px;
+}
+
+.generalInfoContainer {
     display: flex;
+    justify-content: space-between;
+}
+
+.generalContainer h1{
+    margin: 0 20px;
+}
+
+.imageContainer {
+    background-image: url('../../assets/pokeball.jpg');
+    background-repeat: no-repeat;
+    background-size:contain;
+    background-position:center;
+}
+  
+.imageContainer img {
+    height: 150px;  
+}
+
+.mainContainer {
+    background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.navBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.navBar img {
+    height: 100px;
+}
+
+
+.progressBarBackground {
+    width: 150px;
+    background-color: lightgray;
+    border-radius: 8px;
+}
+
+.progressBar {
+    background-color: lightgreen;
+    border-radius: 8px;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.statName, .progressBarBackground {
+    margin-right: 8px;
+}
+
+.statsContainer, .generalContainer {
+    padding: 20px;
+    width: 40%;
+}
+
+.statsContainer {
+    margin-top: 40px;
+}
+
+.taContainer, .progressBarContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.title, .statName {
+    text-transform: capitalize;
+}
+
+@media (max-width: 900px) {
+    .statsContainer, .generalContainer {
+        width: 100%;
+    }
 }

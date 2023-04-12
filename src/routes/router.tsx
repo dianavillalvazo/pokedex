@@ -12,11 +12,11 @@ import { PokemonStats } from '@/modules/PokemonStats/PokemonStats';
 
 export const mainRouter = createBrowserRouter([
   {
-    path: '/',
+    path: '/counter',
     element: <App />,
   },
   {
-    path: '/pokedex',
+    path: '/',
     element: <Home />,
   },
   {

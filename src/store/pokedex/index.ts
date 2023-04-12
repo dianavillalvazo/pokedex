@@ -1,38 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import reducers from './reducers';
-
-export interface pokemon {
-  name: string;
-  url: string;
-}
-
-interface ability {
-  ability: {
-    name: string;
-  };
-}
-
-interface stat {
-  name: string;
-}
-
-interface stats {
-  base_stat: number;
-  stat: stat;
-}
-
-export interface pokemonStats extends pokemon {
-  types: string;
-  id: number;
-  height: number;
-  weight: number;
-  abilities: ability[];
-  stats: stats[];
-}
-
+import { pokemon, pokemonStats } from '@/types/pokedex';
 export interface pokedex {
   pokemonsList: pokemon[];
   singlePokemon: pokemonStats;
+  offset: number;
 }
 
 const initialState: pokedex = {
@@ -40,13 +12,15 @@ const initialState: pokedex = {
   singlePokemon: {
     name: '',
     url: '',
-    types: '',
+    types: [],
     id: 0,
     height: 0,
     weight: 0,
     abilities: [],
     stats: [],
+    sprites: { front_default: '' },
   },
+  offset: 0,
 };
 
 const pokedexSlice = createSlice({
@@ -55,6 +29,11 @@ const pokedexSlice = createSlice({
   initialState,
 });
 
-export const { setPokemonsList, setSinglePokemon } = pokedexSlice.actions;
+export const {
+  cleanSinglePokemon,
+  setPokemonsList,
+  setSinglePokemon,
+  setPageChange,
+} = pokedexSlice.actions;
 
 export default pokedexSlice.reducer;
